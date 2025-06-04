@@ -1,0 +1,207 @@
+
+
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+section{
+    
+    width: 100%;
+   max-height:100VH;
+    display: flex;
+    
+}
+aside{
+    margin: 2%;
+    border-radius: 2%;
+    width: 100%;
+    height: 100vh;
+    
+
+}
+.topgreen-screen{
+  
+    transform: translateX(-30%);
+    transform: translateY(-10%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topgreen-screen> div{
+    top: 0;
+    left: 0;
+    width: 370px;
+    height: 370px;
+    border-radius: 50%;
+    background-color: rgba(2, 186, 2, 0.89);
+    transform: translateX(-30%);  
+    
+}
+
+.main-screen{
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+.img-screen{
+    width: 290px;
+    height: 290px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 1px 2PX 1px rgb(211, 210, 210);
+    transform: translateY(-65%);
+
+}
+.img-screen img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.rest{
+    
+    transform: translateY(-60%);
+}
+h1{
+    
+    font-size: x-large;
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 0%;
+}
+P{
+    text-align: center;
+    color: gray;
+    font-weight: 600;
+    margin-top: 40px;
+    font-size: small;
+    width: 80%;
+    margin-left: 10%;
+}
+.buttons {
+    
+    padding-left: 10%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+    border: none;
+    margin-top: 40px;
+}
+.buttons .start{
+    width: 100%;
+    background-color: green;
+    color: white;
+    padding: 15px;
+    font-weight: bold;
+    border-radius: 13px;
+    border: none;
+    
+}
+.buttons .skip{
+    margin-top: 14px;
+    color: gray;
+    font-weight: 500;
+    font-size: small;
+    background-color: whitesmoke;
+    border: none;
+    
+}
+.dots{
+    display: flex;
+    gap: 4PX;
+    margin-top: 16px;
+
+}
+.dots span{
+    width: 10px;
+    height: 10px;
+    background-color: gray;
+    border-radius: 50%;
+}
+.dots .activa{
+    background-color: green;
+
+}
+.bottomgreen-screen{
+    
+   transform: translateX();
+    display: flex;
+    justify-content: right;
+}
+.bottomgreen-screen> div{
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(179, 245, 179, 0.5);
+    transform: translateX(50%);
+    transform: translateY(80%);
+
+
+    position: absolute;
+    z-index: 0;
+    
+   
+}
+
+.fade {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
+.show {
+  opacity: 1;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.slide-in-right {
+    animation: slideInFromRight 0.5s ease forwards;
+}
+
+.slide-out-left {
+    animation: slideOutToLeft 0.5s ease forwards;
+}
+
+
+/* Le reste de ton CSS reste valable, tu peux simplement ajuster les hauteurs */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+#onboarding-container {
+  width: 100%;
+  height: 100%;
+}

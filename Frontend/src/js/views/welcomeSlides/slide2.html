@@ -1,0 +1,42 @@
+<section>
+        <aside>
+            <div class="topgreen-screen">
+                <div>
+                </div>
+            </div>
+            <div class="main-screen">
+                <div class="img-screen">
+                    <img src="images/images medecins/medecin (9).jpg" alt="">
+                </div>
+                <div class="rest">
+                    <h1>Meet Best Doctors</h1>
+                    <p>Tired of waiting hours to get an appointment with the right medical staff you need in any hospital or medical center.</p>
+                
+                    <div class="buttons">
+                        <button class="start"> Next</button>
+                        <button class="skip">Skip</button>
+                        <div class="dots">
+                            <span></span>
+                            <span class="activa"></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    <script type="module">
+        import { loadPage } from '/src/js/router.js';
+
+        document.querySelector('.start')?.addEventListener('click', () => {
+            const current = window.location.hash.slice(1);
+            const slides = ['slide1', 'slide2', 'slide3'];
+            const currentIndex = slides.indexOf(current);
+            const nextSlide = slides[currentIndex + 1] || 'slide3';
+            window.location.hash = nextSlide;
+            location.reload();
+            loadPage('forward');
+        });
+    </script>
+
+</section>
