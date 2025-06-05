@@ -1,5 +1,6 @@
 from django.db import models
-from Consultations.models import Consultation # Importe le modèle Consultation
+from django.utils.translation import gettext_lazy as _
+from Apps.Consultations.models import Consultation # Importe le modèle Consultation
 
 class Ordonnance(models.Model):
     """
@@ -34,13 +35,6 @@ class Ordonnance(models.Model):
         null=True,
         help_text="Duration of the treatment (e.g., '7 jours', '1 mois')."
     )
-    # Le médecin signataire est implicitement le medical_personnel de la consultation.
-    # Pour le redondant `medecinSignataire` du diagramme, on peut l'obtenir via `consultation.medical_personnel`.
-    # Si on voulait stocker un signataire différent, ce serait un ForeignKey vers MedicalPersonnel.
-    # medecin_signataire_override = models.ForeignKey(
-    #     MedicalPersonnel, on_delete=models.SET_NULL, null=True, blank=True,
-    #     related_name='ordonnances_signees', help_text="Override signee if different from consultation's medical personnel."
-    # )
 
     last_update = models.DateTimeField(
         auto_now=True,
@@ -52,7 +46,7 @@ class Ordonnance(models.Model):
         Génère un numéro d'ordonnance si non fourni.
         """
         if not self.numero_ordonnance:
-            self.numero_ordonnance = f"ORD-{models.UUIDField().hex[:8]}"
+            self.numero_ordonnance = f"ORD-{models.UUIDField().h}"
         super().save(*args, **kwargs)
 
     def __str__(self):

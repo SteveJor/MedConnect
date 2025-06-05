@@ -40,13 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'Consultations',
-    'Medical_Personnel',
-    'Medical_Records',
-    'Notifications',
-    'Patients',
-    'Prescriptions',
-    'Users'
+    'Apps.Consultations',
+    'Apps.Medical_Personnel',
+    'Apps.Medical_Records',
+    'Apps.Notifications',
+    'Apps.Patients',
+    'Apps.Prescriptions',
+    'Apps.Users'
 ]
 
 MIDDLEWARE = [
@@ -98,6 +98,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3030",
     # Add other origins if needed
 ]
+AUTH_USER_MODEL = 'Users.User'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

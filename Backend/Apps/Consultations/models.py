@@ -1,7 +1,8 @@
 from django.db import models
-from Patients.models import Patient
-from Medical_Personnel.models import MedicalPersonnel
-from Medical_Records.models import DossierMedical # Pour lier aux dossiers médicaux
+from Apps.Patients.models import Patient
+from Apps.Medical_Personnel.models import MedicalPersonnel
+from django.utils.translation import gettext_lazy as _
+from Apps.Medical_Records.models import DossierMedical # Pour lier aux dossiers médicaux
 
 class DemandeConsultation(models.Model):
     """

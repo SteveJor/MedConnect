@@ -1,32 +1,28 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import User
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.utils.translation import gettext_lazy as _
+from .models import CompteUtilisateur
 
-@admin.register(User)
-class CustomUserAdmin(UserAdmin):
-    """
-    Personnalisation de l'administration du modèle User.
-    Permet de gérer l'email comme champ unique pour la connexion.
-    """
-    # Ajoute 'email' aux champs affichés dans la liste des utilisateurs
-    list_display = UserAdmin.list_display + ('email',)
-    # Ajoute 'email' aux champs de recherche
-    search_fields = ('email', 'username', 'first_name', 'last_name')
-    # Ajoute 'email' au filtre
-    list_filter = UserAdmin.list_filter + ('email',)
+@admin.register(CompteUtilisateur)
+class UserAdmin(BaseUserAdmin):
+    model = CompteUtilisateur
+    ordering = ['email']
+    list_display = ('email', 'username', 'is_active', 'is_staff', 'is_superuser')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
 
-    # Modifie les champs affichés dans le formulaire d'ajout et de modification
-    fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('email',)}),
-    )
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('email',)}),
+    search_fields = ('email', 'username', )
+    readonly_fields = ('last_login', 'date_joined')
+
+    fieldsets = (
+        (_('Informations de connexion'), {'fields': ('email', 'password')}),
+        (_('Informations personnelles'), {'fields': ('username', )}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        (_('Dates importantes'), {'fields': ('last_login', 'date_joined')}),
     )
 
-    # Assurez-vous que l'email est unique pour la validation dans l'admin
-    # UserAdmin gère déjà l'unicité de USERNAME_FIELD, mais une double vérification est bonne.
-    # Dans les formulaires d'administration, l'email sera maintenant le champ d'identification principal.
-
-    # Pour gérer les groupes directement depuis le formulaire utilisateur dans l'admin,
-    # les champs 'groups' et 'user_permissions' sont déjà inclus dans UserAdmin.
-    # Vous n'avez pas besoin de les redéfinir à moins que vous souhaitiez changer leur affichage.
+    add_fieldsets = (
+        (_('Créer un nouvel utilisateur'), {
+            'classes': ('wide',),
+            'fields': ('email', 'username',  'password1', 'password2', 'is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions'),
+        }),
+    )

@@ -1,5 +1,7 @@
 from django.db import models
-from Users.models import User # Importe le modèle User personnalisé
+from django.utils.translation import gettext_lazy as _
+from Apps.Users.models import CompteUtilisateur  # Importe le modèle User personnalisé
+
 
 class Patient(models.Model):
     """
@@ -8,8 +10,8 @@ class Patient(models.Model):
     """
     # Liaison One-to-One avec le modèle User.
     # related_name='patient_profile' permet d'accéder au profil Patient depuis l'objet User (user.patient_profile).
-    user = models.OneToOneField(
-        User,
+    compteUtilisateur = models.OneToOneField(
+        CompteUtilisateur,
         on_delete=models.CASCADE, # Si l'utilisateur est supprimé, le profil patient l'est aussi.
         related_name='patient_profile',
         help_text="The user account associated with this patient profile."
@@ -80,7 +82,7 @@ class Patient(models.Model):
         """
         Retourne une représentation en chaîne de caractères du patient.
         """
-        return f"{self.prenom} {self.nom} (User: {self.user.email})"
+        return f"{self.prenom} {self.nom} (User: {self.compteUtilisateur.email})"
 
     class Meta:
         """

@@ -1,5 +1,6 @@
 from django.db import models
-from Patients.models import Patient # Importe le modèle Patient
+from django.utils.translation import gettext_lazy as _
+from Apps.Patients.models import Patient # Importe le modèle Patient
 
 class DossierMedical(models.Model):
     """
