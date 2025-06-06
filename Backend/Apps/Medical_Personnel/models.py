@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from Apps.Users.models import CompteUtilisateur # Importe le modèle User personnalisé
+from Apps.Patients.models import Patient # Importe le modèle User personnalisé
 
 class MedicalPersonnel(models.Model):
     """
@@ -10,7 +10,7 @@ class MedicalPersonnel(models.Model):
     # Liaison One-to-One avec le modèle User.
     # related_name='medical_personnel_profile' permet d'accéder au profil médical depuis l'objet User.
     comptePatientLie = models.OneToOneField(
-        CompteUtilisateur,
+        Patient,
         on_delete=models.CASCADE, # Si l'utilisateur est supprimé, le profil médical l'est aussi.
         related_name='medical_personnel_profile',
         help_text="The user account associated with this medical personnel profile."
@@ -74,7 +74,7 @@ class MedicalPersonnel(models.Model):
         Retourne une représentation en chaîne de caractères du personnel médical.
         """
         # Utilise le nom complet de l'utilisateur lié ou son email si le nom n'est pas défini
-        return f"Dr. {self.specialite} - {self.comptePatientLie.get_full_name() or self.comptePatientLie.email}"
+        return f"Dr. {self.specialite} - {self.comptePatientLie.compteUtilisateur.get_full_name() or self.comptePatientLie.compteUtilisateur.email}"
 
     class Meta:
         """
@@ -82,4 +82,4 @@ class MedicalPersonnel(models.Model):
         """
         verbose_name = _("Personnel Médical")
         verbose_name_plural = _("Personnel Médical")
-        ordering = ['specialite', 'user__last_name']
+        ordering = ['specialite', 'comptePatientLie']

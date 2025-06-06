@@ -7,7 +7,7 @@ class CompteUtilisateur(AbstractUser):
     Modèle d'utilisateur personnalisé utilisant l'email comme identifiant principal.
     """
     email = models.EmailField(_('Adresse email'), unique=True, help_text=_("Requis. 255 caractères maximum."))
-
+    token = models.CharField(max_length=64, blank=True, null=True)  # Token généré lors de la connexion
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']  # toujours requis pour createsuperuser
 

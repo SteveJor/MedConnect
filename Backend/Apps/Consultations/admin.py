@@ -8,18 +8,19 @@ class DemandeConsultationAdmin(admin.ModelAdmin):
     """
     list_display = (
         'numero_demande', 'patient_full_name', 'patient_email',
+        'medical_personnel_name',  # Ajouté ici
         'statut', 'date_demande', 'last_update'
     )
     list_display_links = ('numero_demande',)
-    list_filter = ('statut', 'date_demande', 'last_update')
+    list_filter = ('statut', 'date_demande', 'last_update', 'medical_personnel')  # Ajouté ici
     search_fields = (
         'numero_demande', 'patient__user__email', 'patient__nom',
-        'patient__prenom', 'motif'
+        'patient__prenom', 'motif', 'medical_personnel__user__email', 'medical_personnel__user__last_name'
     )
     readonly_fields = ('date_demande', 'last_update', 'numero_demande')
     fieldsets = (
         (None, {
-            'fields': ('patient', 'numero_demande', 'motif')
+            'fields': ('patient', 'medical_personnel', 'numero_demande', 'motif')
         }),
         ('Statut et Historique', {
             'fields': ('statut', 'date_demande', 'last_update')
@@ -35,6 +36,13 @@ class DemandeConsultationAdmin(admin.ModelAdmin):
         return obj.patient.user.email
     patient_email.short_description = 'Email Patient'
     patient_email.admin_order_field = 'patient__user__email'
+
+    def medical_personnel_name(self, obj):
+        if obj.medical_personnel:
+            return f"Dr. {obj.medical_personnel.user.get_full_name() or obj.medical_personnel.user.email}"
+        return "N/A"
+    medical_personnel_name.short_description = 'Personnel Médical'
+    medical_personnel_name.admin_order_field = 'medical_personnel__user__last_name'
 
 
 @admin.register(Consultation)

@@ -7,19 +7,19 @@ class MedicalPersonnelAdmin(admin.ModelAdmin):
     Personnalisation de l'administration du modèle MedicalPersonnel.
     """
     list_display = (
-        'user_email', 'specialite', 'numero_licence', 'annee_exercice',
+        'get_user_email', 'specialite', 'numero_licence', 'annee_exercice',
         'telephone_pro', 'last_update'
     )
-    list_display_links = ('user_email', 'specialite', 'numero_licence')
+    list_display_links = ('get_user_email', 'specialite', 'numero_licence')
     list_filter = ('specialite', 'annee_exercice', 'date_creation', 'last_update')
     search_fields = (
-        'user__email', 'user__first_name', 'user__last_name',
+        'comptePatientLie__compteUtilisateur__email', 'comptePatientLie__nom', 'comptePatientLie__prenom',
         'numero_licence', 'specialite', 'email_pro', 'telephone_pro'
     )
     readonly_fields = ('date_creation', 'last_update')
     fieldsets = (
         (None, {
-            'fields': ('user',)
+            'fields': ('comptePatientLie',)
         }),
         ('Informations Professionnelles', {
             'fields': (
@@ -32,10 +32,13 @@ class MedicalPersonnelAdmin(admin.ModelAdmin):
         }),
     )
 
-    def user_email(self, obj):
+    def get_user_email(self, obj):
         """
-        Méthode pour afficher l'email de l'utilisateur lié dans la liste_display.
+        Affiche l'email de l'utilisateur lié au patient lié.
         """
-        return obj.user.email
-    user_email.short_description = 'Email Utilisateur'
-    user_email.admin_order_field = 'user__email'
+        try:
+            return obj.comptePatientLie.compteUtilisateur.email
+        except AttributeError:
+            return "-"
+    get_user_email.short_description = 'Email utilisateur'
+    get_user_email.admin_order_field = 'comptePatientLie__compteUtilisateur__email'

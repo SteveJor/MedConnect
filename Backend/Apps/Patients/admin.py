@@ -8,24 +8,24 @@ class PatientAdmin(admin.ModelAdmin):
     """
     # Champs affichés dans la liste des patients dans l'interface d'administration.
     list_display = (
-        'user_email', 'nom', 'prenom', 'date_naissance', 'telephone',
+        'get_user_email', 'nom', 'prenom', 'date_naissance', 'telephone',
         'sexe', 'last_update'
     )
     # Champs cliquables qui mènent à la page de détail du patient.
-    list_display_links = ('user_email', 'nom', 'prenom')
-    # Champs par lesquels il est possible de filtrer la liste des patients.
+    list_display_links = ('get_user_email', 'nom', 'prenom')
+    # Champs de filtrage disponibles.
     list_filter = ('sexe', 'pays_residence', 'date_creation', 'last_update')
-    # Champs par lesquels il est possible de rechercher un patient.
+    # Champs utilisés pour la recherche.
     search_fields = (
-        'user__email', 'nom', 'prenom', 'telephone',
+        'compteUtilisateur__email', 'nom', 'prenom', 'telephone',
         'maladie_courante', 'maladie_familiale'
     )
-    # Champs à ne pas modifier dans le formulaire d'administration.
+    # Champs en lecture seule dans le formulaire d'administration.
     readonly_fields = ('date_creation', 'last_update')
-    # Organisation des champs dans le formulaire de détail/modification.
+    # Organisation des champs dans le formulaire d’édition.
     fieldsets = (
         (None, {
-            'fields': ('user',)
+            'fields': ('compteUtilisateur',)
         }),
         ('Informations Personnelles', {
             'fields': ('nom', 'prenom', 'date_naissance', 'sexe', 'langue_parlee')
@@ -41,10 +41,10 @@ class PatientAdmin(admin.ModelAdmin):
         }),
     )
 
-    def user_email(self, obj):
+    def get_user_email(self, obj):
         """
-        Méthode pour afficher l'email de l'utilisateur lié dans la liste_display.
+        Affiche l'email de l'utilisateur lié au patient.
         """
-        return obj.user.email
-    user_email.short_description = 'Email Utilisateur' # Nom de la colonne dans l'admin
-    user_email.admin_order_field = 'user__email' # Permet de trier par email de l'utilisateur
+        return obj.compteUtilisateur.email if obj.compteUtilisateur else "-"
+    get_user_email.short_description = 'Email Utilisateur'
+    get_user_email.admin_order_field = 'compteUtilisateur__email'

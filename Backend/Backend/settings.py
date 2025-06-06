@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'Apps.Consultations',
     'Apps.Medical_Personnel',
     'Apps.Medical_Records',
-    'Apps.Notifications',
     'Apps.Patients',
     'Apps.Prescriptions',
     'Apps.Users'
@@ -98,7 +97,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3030",
     # Add other origins if needed
 ]
-AUTH_USER_MODEL = 'Users.User'
+AUTH_USER_MODEL = 'Users.CompteUtilisateur'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

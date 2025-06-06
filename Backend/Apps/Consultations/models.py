@@ -14,6 +14,15 @@ class DemandeConsultation(models.Model):
         related_name='demandes_consultation',
         help_text="The patient who initiated this consultation request."
     )
+    # Liaison Many-to-One: une consultation est effectuée par un personnel médical.
+    medical_personnel = models.ForeignKey(
+        MedicalPersonnel,
+        on_delete=models.SET_NULL, # Si le personnel médical est supprimé, les consultations restent.
+        null=True,
+        blank=True,
+        related_name='reception_demandes_consultation_medecin',
+        help_text="The medical personnel who conducted the consultation."
+    )
     # L'ID de la consultation peut être généré à la création ou lié à la consultation effective
     # Gardons-le comme un champ unique pour la demande si une consultation n'est pas encore créée.
     # `numero_consultation` du diagramme semble être une référence à la consultation future.
