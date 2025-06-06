@@ -4,7 +4,9 @@ export function loadPage(direction = 'forward') {
     const hash = window.location.hash.slice(1) || 'slide1';
     const validSlides = ['slide1', 'slide2', 'slide3'];
     const page = validSlides.includes(hash) ? hash : 'slide1';
-    const path = `/src/js/views/welcomeSlides/${page}.html`;
+    // const path = `/src/js/views/welcomeSlides/${page}.html`;
+    const path = `/src/js/views/loginPages/register4.html`;
+
     const app = $('#app');
 
     const animationOut = direction === 'forward' ? 'slide-out-left' : 'slide-out-right';

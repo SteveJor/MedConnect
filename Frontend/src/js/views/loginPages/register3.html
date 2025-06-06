@@ -1,0 +1,75 @@
+<div class="topgreen-screen  z-0">
+    <div>
+    </div>
+</div>
+<div class="glass-card " style="margin-top: -44vh;">
+    <div class="phone-mockup"  style="margin-top: 40px">
+        <div class="screen-container screen-1 active" id="screen1">
+            <div class="main-header-content">
+                <a href="#" class="back-arrow material-icons"><i class="fa-solid fa-chevron-left"></i></a>
+                <span class="header-title"><h5>Fill your physical informations</h5></span>
+            </div>
+            <div class="progress-section" style="margin-bottom: 40px">
+                <div class="progress-text">Step 3/4</div>
+                <div class="progress-bar-custom">
+                    <div class="progress-bar-fill" style="width: 75%;"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="weight" class="form-label">Weight</label>
+                <select class="form-select" id="weight">
+                    <option value="71kg" selected>71 kg</option>
+                    <option value="70kg">70 kg</option>
+                    <option value="72kg">72 kg</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="size" class="form-label">Size</label>
+                <select class="form-select" id="size">
+                    <option value="1.75m" selected>1.75 m</option>
+                    <option value="1.70m">1.70 m</option>
+                    <option value="1.80m">1.80 m</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Cardiac antecedents</label>
+                <div class="d-flex justify-content-around">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cardiacAntecedents" id="cardiacNo" checked>
+                        <label class="form-check-label" for="cardiacNo">
+                            No
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cardiacAntecedents" id="cardiacYes">
+                        <label class="form-check-label" for="cardiacYes">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="cardiacAntecedents" id="cardiacOthers">
+                        <label class="form-check-label" for="cardiacOthers">
+                            Others
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="commonDisease" class="form-label">Common disease</label>
+                <input type="text" class="form-control" id="commonDisease" placeholder="Malaria" value="Malaria">
+            </div>
+
+            <div class="form-group">
+                <label for="familyDisease" class="form-label">Family disease</label>
+                <input type="text" class="form-control" id="familyDisease" placeholder="Diabetes" value="Diabetes">
+            </div>
+
+            <button class="btn btn-primary mt-auto" onclick="goToScreen(2)">Continue</button>
+        </div>
+    </div>
+
+</div>
