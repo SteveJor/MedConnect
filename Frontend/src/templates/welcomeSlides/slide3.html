@@ -1,4 +1,4 @@
-<section>
+<section class="section-slide">
         <aside>
             <div class="topgreen-screen">
                 <div>
@@ -14,7 +14,7 @@
                 
                     <div class="buttons">
                         <button class="start"> Get Started</button>
-                        <button class="skip">Skip</button>
+                        <a href="/Login"><button class="skip"> Skip</button></a>
                         <div class="dots">
                             <span></span>
                             <span></span>
@@ -25,17 +25,13 @@
             </div>
         </aside>
     <script type="module">
-        import { loadPage } from '/src/js/router.js';
+        import { loadPage } from '/src/js/app/router.js';
 
         document.querySelector('.start')?.addEventListener('click', () => {
-            console.log("djif")
-            const current = window.location.hash.slice(1);
-            const slides = ['slide1', 'slide2', 'slide3'];
-            const currentIndex = slides.indexOf(current);
-            const nextSlide = slides[currentIndex + 1] || 'slide3';
-            window.location.hash = nextSlide;
-            loadPage('forward');
-            location.reload();
+            // window.location.hash = 'Login';
+            loadPage('forward', 2);
+
+            // location.reload();
 
         });
     </script>

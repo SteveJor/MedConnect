@@ -8,25 +8,20 @@
     font-family: "Roboto", sans-serif;
 }
 
-section{
-    
-    width: 100%;
-   max-height:100VH;
+.section-slide{
+    width: 100vw;
     display: flex;
-    
+    position: relative;
+
 }
 aside{
-    margin: 2%;
     border-radius: 2%;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    
+    overflow-y: auto;
 
 }
 .topgreen-screen{
-  
-    transform: translateX(-30%);
-    transform: translateY(-10%);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,12 +30,12 @@ aside{
 .topgreen-screen> div{
     top: 0;
     left: 0;
-    width: 370px;
-    height: 370px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     background-color: rgba(2, 186, 2, 0.89);
-    transform: translateX(-30%);  
-    
+    transform: translateX(-30%);
+
 }
 
 .main-screen{
@@ -49,7 +44,7 @@ aside{
     display: flex;
     flex-direction: column;
     align-items: center;
-   
+
 }
 .img-screen{
     width: 290px;
@@ -66,7 +61,7 @@ aside{
     object-fit: cover;
 }
 .rest{
-    
+
     transform: translateY(-60%);
 }
 h1{
@@ -85,7 +80,7 @@ P{
     margin-left: 10%;
 }
 .buttons {
-    
+
     padding-left: 10%;
     width: 90%;
     display: flex;
@@ -103,7 +98,7 @@ P{
     font-weight: bold;
     border-radius: 13px;
     border: none;
-    
+
 }
 .buttons .skip{
     margin-top: 14px;
@@ -112,7 +107,7 @@ P{
     font-size: small;
     background-color: whitesmoke;
     border: none;
-    
+
 }
 .dots{
     display: flex;
@@ -131,7 +126,7 @@ P{
 
 }
 .bottomgreen-screen{
-    
+
    transform: translateX();
     display: flex;
     justify-content: right;
@@ -147,11 +142,25 @@ P{
     transform: translateX(50%);
     transform: translateY(80%);
 
-
     position: absolute;
     z-index: 0;
-    
-   
+
+
+}
+/* Animation de slide du bas vers le haut */
+@keyframes slideUpFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slideUpFadeIn 1s ease-out both;
 }
 
 .fade {
@@ -186,19 +195,13 @@ P{
 }
 
 .slide-in-right {
-    animation: slideInFromRight 0.5s ease forwards;
+    animation: slideInFromRight 1s ease forwards;
 }
 
 .slide-out-left {
-    animation: slideOutToLeft 0.5s ease forwards;
+    animation: slideOutToLeft 1s ease forwards;
 }
 
-
-/* Le reste de ton CSS reste valable, tu peux simplement ajuster les hauteurs */
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
 
 #onboarding-container {
   width: 100%;
@@ -208,21 +211,21 @@ html, body {
 
 body {
     background: linear-gradient(to bottom right, #d4f0ff, #f4fafe);
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Segoe UI', sans-serif;
+    overflow-y: hidden;
 }
 
 .glass-card {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 100px 30px 0 30px;
+    padding: 100px 30px 10px 30px;
     width: 100vw;
-    margin-left: -12px ;
     height: 100vh;
+    overflow-y: auto;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.18);
 }

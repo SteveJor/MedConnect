@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #e5f8ff 0%, #ffffff 40%, #ccf2ec 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .splash-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .splash-logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .splash-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="splash-container ">
+    <!-- Remplace ce SVG par le logo exact si besoin -->
+    <img src="/images/Logo.png" alt="" srcset="">
+
+    <div class="splash-title">Medconnect</div>
+</div>
+<script type="module">
+    import { loadPage } from '/src/js/app/router.js';
+    setTimeout(() => {
+        window.location.hash = "slide1";
+        location.reload();
+        loadPage('forward', 1)
+    }, 2500);
+
+</script>
+</body>
+</html>

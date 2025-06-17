@@ -1,0 +1,100 @@
+
+<div class="topgreen-screen z-0 position-absolute">
+    <div></div>
+</div>
+
+<div class="glass-card text-center">
+    <h1 class="title mb-5">Sign up to start</h1>
+    <p class="description">You can search course, apply course and find the right treatment for your sickness.</p>
+
+    <div class="social-buttons">
+        <a href="#" class="social-btn border-0">
+            <img src="https://img.icons8.com/color/16/google-logo.png" alt="Google">
+            Google
+        </a>
+        <a href="#" class="social-btn border-0">
+            <img src="https://img.icons8.com/ios-filled/16/3b5998/facebook-new.png" alt="Facebook">
+            Facebook
+        </a>
+    </div>
+
+    <form id="signupForm" class="animate-slide-up">
+        <div class="form-group">
+            <input type="text" class="form-control" id="name" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" id="email" placeholder="Email">
+        </div>
+        <div class="form-group password-input-group">
+            <input type="password" class="form-control" id="password" placeholder="Password">
+            <span class="material-icons toggle-password" onclick="togglePasswordVisibility('password')">👁</span>
+        </div>
+
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="termsAgree">
+            <label class="form-check-label" for="termsAgree">
+                I agree with the <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a>
+            </label>
+        </div>
+
+        <button class="btn btn-primary border-0" type="button" id="btn-signup-step1" onclick="submitForm(event)">Sign up</button>
+    </form>
+
+    <div class="login-link">
+        Have an account? <a href="/Login">Log in</a>
+    </div>
+</div>
+
+<script type="module" >
+    import $ from 'jquery';
+
+    // Fonction pour basculer la visibilité du mot de passe
+    import {router} from "/src/js/app/router.js";
+
+    function togglePasswordVisibility(id) {
+        const passwordField = document.getElementById(id);
+        const toggleIcon = passwordField.nextElementSibling; // L'icône de l'œil
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.textContent = '👁';
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.textContent = '👁';
+        }
+    }
+
+    // Étape 1 - Enregistrement des données de base
+    function submitForm(event) {
+        event.preventDefault();
+
+        const name = $('#name').val();
+        const email = $('#email').val();
+        const password = $('#password').val();
+        const termsAgree = $('#termsAgree').is(':checked');
+
+        if (!name || !email || !password || !termsAgree) {
+            alert("Veuillez remplir tous les champs et accepter les conditions.");
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Email invalide.");
+            return;
+        }
+
+        const formData = {
+            name,
+            email,
+            password
+        };
+
+        localStorage.setItem("signupData", JSON.stringify(formData));
+        console.log("Données enregistrées dans localStorage:", formData);
+
+        history.pushState(null, '', '/Register1');
+        router(); // charge la page suivante
+    }
+    window.submitForm = submitForm;
+</script>
