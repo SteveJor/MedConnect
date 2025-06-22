@@ -80,6 +80,18 @@ export function router() {
         loadView("loginPages/register5.html", () => {
         });
     }
+    else if (path === "/Home") {
+        loadView("Main/home.html", () => {
+        });
+    }
+    else if (path === "/AppelVideo") {
+        loadView("Main/appelVideo.html", () => {
+        });
+    }
+    else if (path === "/AppelVideoPatient") {
+        loadView("Main/appelVideoPatient.html", () => {
+        });
+    }
     else if (path === "/Signin1") {
         loadView("produits.html", () => {
             $.getJSON("/api/produits/", function (data) {

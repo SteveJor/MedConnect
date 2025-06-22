@@ -1,7 +1,6 @@
 export default {
   server: {
-    proxy: {
-      '/api': 'http://localhost:8000',
-    }
+    host: true, // ou '0.0.0.0'
+    port: 5173,
   }
-};
+}
