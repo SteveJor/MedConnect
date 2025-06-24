@@ -13,7 +13,7 @@
                     <p>Tired of waiting hours to get an appointment with the right medical staff you need in any hospital or medical center.</p>
                 
                     <div class="buttons">
-                        <button class="start"> Get Started</button>
+                        <button class="start"  onclick="submitForm(event)"> Get Started</button>
                         <a href="/Login"><button class="skip"> Skip</button></a>
                         <div class="dots">
                             <span></span>
@@ -24,16 +24,20 @@
                 </div>
             </div>
         </aside>
-    <script type="module">
-        import { loadPage } from '/src/js/app/router.js';
+    <script type="module" >
+        import $ from 'jquery';
 
-        document.querySelector('.start')?.addEventListener('click', () => {
-            // window.location.hash = 'Login';
-            loadPage('forward', 2);
+        // Fonction pour basculer la visibilité du mot de passe
+        import {router} from "/src/js/app/router.js";
 
-            // location.reload();
+        function submitForm(event) {
+            event.preventDefault();
 
-        });
+
+            history.pushState(null, '', '/Login');
+            router(); // passe à l’étape suivante
+        }
+        window.submitForm = submitForm;
     </script>
 
 </section>

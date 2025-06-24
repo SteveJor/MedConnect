@@ -4,7 +4,7 @@
 </div>
 <div class="glass-card ">
     <div class="main-header-content">
-        <a href="/Signin" class="back-arrow material-icons"><i class="fa-solid fa-chevron-left"></i></a>
+        <a onclick="goBack(event, '/Signin')" class="back-arrow material-icons"><i class="fa-solid fa-chevron-left"></i></a>
         <span class="header-title">Login as a patient</span>
     </div>
     <div class="progress-section" style="margin-bottom: 60px">
@@ -20,17 +20,17 @@
         <div class="form-group ">
             <label class="form-label">Age</label>
             <div class="age-selects">
-                <select class="form-select" id="ageDay">
+                <select class="form-select" style="height: 45px" id="ageDay">
                     <option value="">Day</option>
                     <option value="1">1</option>
                     <option value="2" selected>2</option>
                 </select>
-                <select class="form-select" id="ageMonth">
+                <select class="form-select" style="height: 45px" id="ageMonth">
                     <option value="">Month</option>
                     <option value="Jan">Jan</option>
                     <option value="Feb" selected>Feb</option>
                 </select>
-                <select class="form-select" id="ageYear">
+                <select class="form-select" style="height: 45px" id="ageYear">
                     <option value="">Year</option>
                     <option value="1990" selected>1990</option>
                     <option value="1991">1991</option>
@@ -64,14 +64,14 @@
 
         <div class="form-group">
             <label for="mobileNumber" class="form-label">Mobile Number</label>
-            <input type="text" class="form-control" id="mobileNumber" value="+237 699887755">
+            <input type="text" class="form-control" style="height: 45px" id="mobileNumber" value="+237 699887755">
         </div>
 
         <div class="form-group">
             <label for="patientEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="patientEmail" value="bilonggeorges@gmail.com">
+            <input type="email" class="form-control" style="height: 45px" id="patientEmail" value="bilonggeorges@gmail.com">
         </div>
-    </div> <button class="btn btn-primary mt-auto" type="button"  onclick="submitForm(event)">Continue</button>
+    </div> <button class="btn  btn-success border-0 w-100 p-3  mt-auto" type="button"  onclick="submitForm(event)">Continue</button>
     </form>
 </div>
 
@@ -104,5 +104,12 @@
         history.pushState(null, '', '/Register2');
         router(); // passe à l’étape suivante
     }
+    function goBack(event, url){
+        event.preventDefault();
+
+        history.pushState(null, '', url);
+        router();
+    }
     window.submitForm = submitForm;
+    window.goBack = goBack;
 </script>

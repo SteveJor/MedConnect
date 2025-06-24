@@ -34,10 +34,6 @@ export function loadPage(direction = 'forward', status = 1) {
                 })
         }, 1000);
 
-    } else if (status === 2) {
-        loadView("loginPages/login.html", () => {
-            history.pushState(null, '', `Login`);
-        });
     }
 
 }
@@ -53,7 +49,9 @@ export function router() {
         loadPage('forward', 1); // Accueil avec animation slide1
     }
     else if (path === "/Login") {
-        loadView("loginPages/Login.html", () => {
+        loadView("loginPages/login.html", async () => {
+            const { initLoginView } = await import('/src/js/utils/login.js');
+            initLoginView();
         });
     }
     else if (path === "/Signin") {
@@ -74,10 +72,6 @@ export function router() {
     }
     else if (path === "/Register4") {
         loadView("loginPages/register4.html", () => {
-        });
-    }
-    else if (path === "/Register5") {
-        loadView("loginPages/register5.html", () => {
         });
     }
     else if (path === "/Home") {

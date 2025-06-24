@@ -5,7 +5,7 @@
 
 <div class="glass-card">
     <div class="main-header-content">
-        <a href="/Register1" class="back-arrow material-icons" ><i class="fa-solid fa-chevron-left"></i></a>
+        <a onclick="goBack(event, '/Register1')" class="back-arrow material-icons" ><i class="fa-solid fa-chevron-left"></i></a>
         <span class="header-title"><h5>Login as a patient</h5></span>
     </div>
     <div class="progress-section" style="margin-bottom: 30px">
@@ -18,7 +18,7 @@
     <div class="scrollable-content">
         <div class="form-group">
             <label for="country" class="form-label">Country of residence</label>
-            <select class="form-select" id="country">
+            <select class="form-select"  style="height: 45px" id="country">
                 <option value="Cameroon" selected>Cameroon</option>
                 <option value="France">France</option>
                 <option value="Germany">Germany</option>
@@ -27,7 +27,7 @@
 
         <div class="form-group">
             <label for="city" class="form-label">City</label>
-            <select class="form-select" id="city">
+            <select class="form-select"  style="height: 45px" id="city">
                 <option value="Douala" selected>Douala</option>
                 <option value="Yaounde">Yaounde</option>
                 <option value="Bafoussam">Bafoussam</option>
@@ -36,19 +36,19 @@
 
         <div class="form-group">
             <label for="neighborhood" class="form-label">Neighborhood</label>
-            <input type="text" class="form-control" id="neighborhood" value="Pk 12 Douala Bassa">
+            <input type="text" class="form-control"  style="height: 45px" id="neighborhood" value="Pk 12 Douala Bassa">
         </div>
 
         <div class="form-group">
             <label for="language" class="form-label">Spoken language</label>
-            <select class="form-select" id="language">
+            <select class="form-select" style="height: 45px" id="language">
                 <option value="French" selected>French</option>
                 <option value="English">English</option>
                 <option value="Spanish">Spanish</option>
             </select>
         </div>
     </div>
-        <button class="btn btn-primary mt-auto" onclick="submitForm(event)">Continue</button></form>
+        <button class="btn  btn-success border-0 w-100 p-3  mt-auto" onclick="submitForm(event)">Continue</button></form>
 </div>
 
 
@@ -79,5 +79,12 @@
         history.pushState(null, '', '/Register3');
         router(); // passe à l’étape suivante
     }
+    function goBack(event, url){
+        event.preventDefault();
+
+        history.pushState(null, '', url);
+        router();
+    }
     window.submitForm = submitForm;
+    window.goBack = goBack;
 </script>
