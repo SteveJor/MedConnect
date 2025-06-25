@@ -1,13 +1,8 @@
-from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import *
+from Apps.Prescriptions.views import OrdonnanceViewSet, PrescriptionViewSet
 
-# Crée un routeur par défaut
 router = DefaultRouter()
+router.register(r'ordonnances', OrdonnanceViewSet, basename='ordonnance')
+router.register(r'prescriptions', PrescriptionViewSet, basename='prescription')
 
-# Enregistre les ViewSets avec le routeur
-# router.register(r'Utilisateurs', )
-
-urlpatterns = [
-    # ... autres URLs
-]
+urlpatterns = router.urls

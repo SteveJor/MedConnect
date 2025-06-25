@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from Apps.Patients.models import Patient # Importe le modèle Patient
+import uuid
+
 
 class DossierMedical(models.Model):
     """
@@ -60,13 +62,10 @@ class DossierMedical(models.Model):
     # Pour l'instant, on se base sur `dernier_acces` pour l'update du dossier.
 
     def save(self, *args, **kwargs):
-        """
-        Override de la méthode save pour générer un numéro de dossier si non fourni.
-        """
         if not self.numero_dossier:
-            # Générer un numéro de dossier simple. Peut être plus complexe.
-            self.numero_dossier = f"D-{self.patient.user.id}-{models.UUIDField().hex[:8]}"
+            self.numero_dossier = f"D-{self.patient.id}-{uuid.uuid4().hex[:8]}"
         super().save(*args, **kwargs)
+
 
     def __str__(self):
         """

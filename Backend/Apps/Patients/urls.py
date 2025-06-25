@@ -1,13 +1,7 @@
-from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import *
+from .views import PatientViewSet
 
-# Crée un routeur par défaut
 router = DefaultRouter()
+router.register(r'patients', PatientViewSet, basename='patient')
 
-# Enregistre les ViewSets avec le routeur
-# router.register(r'Utilisateurs', )
-
-urlpatterns = [
-    # ... autres URLs
-]
+urlpatterns = router.urls

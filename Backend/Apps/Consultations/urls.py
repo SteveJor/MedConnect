@@ -1,13 +1,8 @@
-from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import *
+from Apps.Consultations.views import DemandeConsultationViewSet, ConsultationViewSet
 
-# Crée un routeur par défaut
 router = DefaultRouter()
+router.register(r'demandes-consultation', DemandeConsultationViewSet, basename='demandeconsultation')
+router.register(r'consultations', ConsultationViewSet, basename='consultation')
 
-# Enregistre les ViewSets avec le routeur
-# router.register(r'Utilisateurs', )
-
-urlpatterns = [
-    # ... autres URLs
-]
+urlpatterns = router.urls
