@@ -18,7 +18,6 @@ class Patient(models.Model):
     )
 
     nom = models.CharField(max_length=100, help_text=_("Patient's last name."))
-    prenom = models.CharField(max_length=100, help_text=_("Patient's first name."))
     date_naissance = models.DateField(help_text=_("Patient's date of birth."))
     telephone = models.CharField(
         max_length=20,
@@ -82,7 +81,7 @@ class Patient(models.Model):
         """
         Retourne une représentation en chaîne de caractères du patient.
         """
-        return f"{self.prenom} {self.nom} (User: {self.compteUtilisateur.email})"
+        return f"{self.nom} (User: {self.compteUtilisateur.email})"
 
     class Meta:
         """
@@ -91,4 +90,4 @@ class Patient(models.Model):
         verbose_name = _("Patient")
         verbose_name_plural = _("Patients")
         # Ordering par défaut pour les listes de patients
-        ordering = ['nom', 'prenom']
+        ordering = ['nom']

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-68%ltkl9kbhz3500&qkz(!4w2%-dhuh+#c7#8v#gc=62nopk+u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -90,13 +90,15 @@ DATABASES = {
 }
 
 # Allow all origins (not recommended for production)
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Or specify allowed origins
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3030",
-    # Add other origins if needed
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "https://localhost:5173",
+#     "http://172.20.10.2:5173",
+#     # Add other origins if needed
+# ]
 AUTH_USER_MODEL = 'Users.CompteUtilisateur'
 
 AUTHENTICATION_BACKENDS = [

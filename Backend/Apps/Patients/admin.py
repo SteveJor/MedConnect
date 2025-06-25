@@ -8,16 +8,16 @@ class PatientAdmin(admin.ModelAdmin):
     """
     # Champs affichés dans la liste des patients dans l'interface d'administration.
     list_display = (
-        'get_user_email', 'nom', 'prenom', 'date_naissance', 'telephone',
+        'get_user_email', 'nom', 'date_naissance', 'telephone',
         'sexe', 'last_update'
     )
     # Champs cliquables qui mènent à la page de détail du patient.
-    list_display_links = ('get_user_email', 'nom', 'prenom')
+    list_display_links = ('get_user_email', 'nom')
     # Champs de filtrage disponibles.
     list_filter = ('sexe', 'pays_residence', 'date_creation', 'last_update')
     # Champs utilisés pour la recherche.
     search_fields = (
-        'compteUtilisateur__email', 'nom', 'prenom', 'telephone',
+        'compteUtilisateur__email', 'nom', 'telephone',
         'maladie_courante', 'maladie_familiale'
     )
     # Champs en lecture seule dans le formulaire d'administration.
@@ -28,7 +28,7 @@ class PatientAdmin(admin.ModelAdmin):
             'fields': ('compteUtilisateur',)
         }),
         ('Informations Personnelles', {
-            'fields': ('nom', 'prenom', 'date_naissance', 'sexe', 'langue_parlee')
+            'fields': ('nom', 'date_naissance', 'sexe', 'langue_parlee')
         }),
         ('Coordonnées', {
             'fields': ('telephone', 'pays_residence', 'ville', 'quartier')

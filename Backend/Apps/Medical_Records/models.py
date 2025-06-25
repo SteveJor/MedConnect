@@ -79,4 +79,4 @@ class DossierMedical(models.Model):
         """
         verbose_name = _("Dossier Médical")
         verbose_name_plural = _("Dossiers Médicaux")
-        ordering = ['patient__nom', 'patient__prenom']
+        ordering = ['patient__nom']

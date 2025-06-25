@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate, get_user_model
 from django.utils import timezone
+from Apps.Patients.models import *
+from Apps.Patients.serializer import *
 import secrets
 import logging
 
@@ -119,9 +121,12 @@ class LoginView(APIView):
             user.token = token # Assigne le jeton au champ 'token' de l'utilisateur
             user.last_login = timezone.now() # Utilise le champ last_login d'AbstractUser
             user.save()
+            patient= Patient.objects.get(compteUtilisateur = user)
+            print(patient)
 
-            serializer = CompteUtilisateurSerializer(user)
-            return Response({'token': token, 'user': serializer.data}, status=status.HTTP_200_OK)
+            serializer = { 'infoUser':CompteUtilisateurSerializer(user).data, 'infoPatient':PatientSerializer(patient).data }
+
+            return Response({'token': token, 'user': serializer}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Email ou mot de passe incorrect.'}, status=status.HTTP_401_UNAUTHORIZED)
 
