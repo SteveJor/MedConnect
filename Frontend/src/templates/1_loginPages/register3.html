@@ -17,21 +17,13 @@
             </div>
 
             <div class="form-group animate-slide-up">
-                <label for="weight" class="form-label">Weight</label>
-                <select class="form-select" style="height: 45px" id="weight">
-                    <option value="71kg" selected>71 kg</option>
-                    <option value="70kg">70 kg</option>
-                    <option value="72kg">72 kg</option>
-                </select>
+                <label for="weight" class="form-label">Weight (kg)</label>
+                <select class="form-select" style="height: 45px" id="weight"></select>
             </div>
 
             <div class="form-group animate-slide-up">
-                <label for="size" class="form-label">Size</label>
-                <select class="form-select" style="height: 45px" id="size">
-                    <option value="1.75m" selected>1.75 m</option>
-                    <option value="1.70m">1.70 m</option>
-                    <option value="1.80m">1.80 m</option>
-                </select>
+                <label for="size" class="form-label">Height (m)</label>
+                <select class="form-select" style="height: 45px" id="size"></select>
             </div>
 
             <div class="form-group animate-slide-up">
@@ -60,12 +52,12 @@
 
             <div class="form-group animate-slide-up">
                 <label for="commonDisease" class="form-label">Common disease</label>
-                <input type="text" class="form-control" style="height: 45px" id="commonDisease" placeholder="Malaria" value="Malaria">
+                <input type="text" class="form-control" style="height: 45px" id="commonDisease" placeholder="Malaria" >
             </div>
 
             <div class="form-group animate-slide-up">
                 <label for="familyDisease" class="form-label">Family disease</label>
-                <input type="text" class="form-control" style="height: 45px" id="familyDisease" placeholder="Diabetes" value="Diabetes">
+                <input type="text" class="form-control" style="height: 45px" id="familyDisease" placeholder="Diabetes">
             </div>
 
             <button class="btn  btn-success border-0 w-100 p-3  mt-auto animate-slide-up" onclick="submitForm(event)" >Continue</button>
@@ -80,20 +72,40 @@
     // Fonction pour basculer la visibilité du mot de passe
     import {router} from "/src/js/app/router.js";
 
+    // Remplissage automatique
+    $(document).ready(() => {
+        // Poids (40 à 200 kg)
+        for (let w = 40; w <= 200; w++) {
+            $("#weight").append(`<option value="${w}">${w} kg</option>`);
+        }
+
+        // Taille (1.00 à 2.50 m par 0.01)
+        for (let h = 100; h <= 250; h++) {
+            const height = (h / 100).toFixed(2);
+            $("#size").append(`<option value="${height}">${height} m</option>`);
+        }
+    })
     function submitForm(event) {
         event.preventDefault();
 
-        const weight = $('#weight').val();
-        const size = $('#size').val();
+        // Extraits comme "71kg" ou "1.75m"
+        const rawWeight = $('#weight').val();
+        const rawSize = $('#size').val();
+
+        const weight = parseFloat(rawWeight.replace('kg', ''));
+        const size = parseFloat(rawSize.replace('m', ''));
+
         const commonDisease = $('#commonDisease').val();
         const familyDisease = $('#familyDisease').val();
-        const cardiacAntecedents = $('#cardiacAntecedents').is(':checked');
+
+        const cardiacInput = $('input[name="cardiacAntecedents"]:checked').attr('id');
+        const cardiacAntecedents = cardiacInput === 'cardiacYes';
 
         let signupData = JSON.parse(localStorage.getItem("signupData")) || {};
         signupData = {
             ...signupData,
-            weight,
-            size,
+            weight,        // format attendu : float
+            size,          // format attendu : float
             commonDisease,
             familyDisease,
             cardiacAntecedents
@@ -101,8 +113,9 @@
 
         localStorage.setItem("signupData", JSON.stringify(signupData));
         history.pushState(null, '', '/Register4');
-        router(); // passe à l’étape suivante
+        router();
     }
+
     function goBack(event, url){
         event.preventDefault();
 

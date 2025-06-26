@@ -8,8 +8,8 @@ export default defineConfig({
     host: true,  // écoute toutes les interfaces réseau
     port: 5173,
     https: {
-      key: fs.readFileSync(path.resolve(__dirname, '172.20.10.2+2-key.pem')),
-      cert: fs.readFileSync(path.resolve(__dirname, '172.20.10.2+2.pem'))
+      key: fs.readFileSync(path.resolve(__dirname, 'mkcert_keys/172.20.10.2+2-key.pem')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'mkcert_keys/172.20.10.2+2.pem'))
     },
     proxy: {
       '/api': {

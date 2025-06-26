@@ -17,24 +17,12 @@
     <div class="scrollable-content">
 
 
-        <div class="form-group ">
-            <label class="form-label">Age</label>
-            <div class="age-selects">
-                <select class="form-select" style="height: 45px" id="ageDay">
-                    <option value="">Day</option>
-                    <option value="1">1</option>
-                    <option value="2" selected>2</option>
-                </select>
-                <select class="form-select" style="height: 45px" id="ageMonth">
-                    <option value="">Month</option>
-                    <option value="Jan">Jan</option>
-                    <option value="Feb" selected>Feb</option>
-                </select>
-                <select class="form-select" style="height: 45px" id="ageYear">
-                    <option value="">Year</option>
-                    <option value="1990" selected>1990</option>
-                    <option value="1991">1991</option>
-                </select>
+        <div class="form-group">
+            <label class="form-label">Birthdate</label>
+            <div class="age-selects d-flex gap-2">
+                <select class="form-select" style="height: 45px" id="ageDay"></select>
+                <select class="form-select" style="height: 45px" id="ageMonth"></select>
+                <select class="form-select" style="height: 45px" id="ageYear"></select>
             </div>
         </div>
 
@@ -64,13 +52,9 @@
 
         <div class="form-group">
             <label for="mobileNumber" class="form-label">Mobile Number</label>
-            <input type="text" class="form-control" style="height: 45px" id="mobileNumber" value="+237 699887755">
+            <input type="text" class="form-control" style="height: 45px" id="mobileNumber" >
         </div>
 
-        <div class="form-group">
-            <label for="patientEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" style="height: 45px" id="patientEmail" value="bilonggeorges@gmail.com">
-        </div>
     </div> <button class="btn  btn-success border-0 w-100 p-3  mt-auto" type="button"  onclick="submitForm(event)">Continue</button>
     </form>
 </div>
@@ -81,29 +65,69 @@
     // Fonction pour basculer la visibilité du mot de passe
     import {router} from "/src/js/app/router.js";
 
-    function submitForm(event) {
+
+    // Remplissage automatique
+    $(document).ready(() => {
+        // Jours
+        for (let d = 1; d <= 31; d++) {
+            $("#ageDay").append(`<option value="${d.toString().padStart(2, '0')}">${d}</option>`);
+        }
+
+        // Mois
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        months.forEach(month => {
+            $("#ageMonth").append(`<option value="${month}">${month}</option>`);
+        });
+
+        // Années
+        const currentYear = new Date().getFullYear();
+        for (let y = currentYear; y >= 1900; y--) {
+            $("#ageYear").append(`<option value="${y}">${y}</option>`);
+        }
+
+        // Poids (40 à 200 kg)
+        for (let w = 40; w <= 200; w++) {
+            $("#weight").append(`<option value="${w}">${w} kg</option>`);
+        }
+    })
+        function submitForm(event) {
         event.preventDefault();
 
-        const day = $('#ageDay').val();
-        const month = $('#ageMonth').val();
+        const day = $('#ageDay').val().padStart(2, '0');
+        const month = $('#ageMonth').val(); // ex: Feb
         const year = $('#ageYear').val();
-        const gender = $('input[name="gender"]:checked').attr('id');
+
+        // Convertir mois texte en chiffre
+        const monthMap = {
+            Jan: '01', Feb: '02', Mar: '03', Apr: '04',
+            May: '05', Jun: '06', Jul: '07', Aug: '08',
+            Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+        };
+        const formattedDate = `${year}-${monthMap[month]}-${day}`;
+
+        const genderRadioId = $('input[name="gender"]:checked').attr('id');
+        const genderMap = {
+            genderMale: 'M',
+            genderFemale: 'F',
+            genderOthers: 'O'
+        };
+
         const mobile = $('#mobileNumber').val();
         const patientEmail = $('#patientEmail').val();
 
         let signupData = JSON.parse(localStorage.getItem("signupData")) || {};
         signupData = {
             ...signupData,
-            birthdate: `${day}-${month}-${year}`,
-            gender,
+            birthdate: formattedDate, // Format attendu : YYYY-MM-DD
+            gender: genderMap[genderRadioId],
             mobile,
-            alt_email: patientEmail
         };
 
         localStorage.setItem("signupData", JSON.stringify(signupData));
         history.pushState(null, '', '/Register2');
-        router(); // passe à l’étape suivante
+        router();
     }
+
     function goBack(event, url){
         event.preventDefault();
 
@@ -113,3 +137,7 @@
     window.submitForm = submitForm;
     window.goBack = goBack;
 </script>
+
+const formData = {
+
+};

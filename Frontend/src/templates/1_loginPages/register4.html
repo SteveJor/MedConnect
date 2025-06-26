@@ -1,13 +1,15 @@
-<div class="topgreen-screen  z-0 position-absolute">
-    <div>
-    </div>
+<div class="topgreen-screen z-0 position-absolute">
+    <div></div>
 </div>
-<div class="glass-card ">
-    <div class="screen-container  screen-2 active" id="screen2">
+<div class="glass-card">
+    <div class="screen-container screen-2 active" id="screen2">
         <div class="main-header-content">
-            <a onclick="goBack(event, '/Register3')" class="back-arrow material-icons"><i class="fa-solid fa-chevron-left"></i></a>
+            <a onclick="goBack(event, '/Register3')" class="back-arrow material-icons">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
             <span class="header-title"><h5>Completed!</h5></span>
         </div>
+
         <div class="progress-section animate-slide-up" style="margin-bottom: 40px">
             <div class="progress-text">Step 4/4</div>
             <div class="progress-bar-custom">
@@ -15,33 +17,95 @@
             </div>
         </div>
 
-        <div class="done-message animate-slide-up">
-            You are done !
+        <!-- Profile Image Upload -->
+        <div class="form-group text-center animate-slide-up">
+            <div id="profileImageContainer" class="rounded-circle overflow-hidden mx-auto" style="width: 200px; height: 200px; border: 2px solid #28a745;">
+                <img id="profileImagePreview" style="width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <label for="profileImageInput" class="btn btn-outline-success mt-4">Choose Profile</label>
+            <input type="file" accept="image/*" id="profileImageInput" style="display: none" />
         </div>
 
-        <button class="btn  btn-success border-0 w-100 p-3  mt-auto animate-slide-up" onclick="submitForm(event)"> Submit</button>
+        <div class="done-message animate-slide-up">You are done!</div>
+
+        <button class="btn btn-success border-0 w-100 p-3 mt-auto animate-slide-up" onclick="submitFinalForm()">Finish Registration</button>
     </div>
 </div>
-
-<script type="module" >
+<script type="module">
     import $ from 'jquery';
+    import { router } from "/src/js/app/router.js";
 
-    // Fonction pour basculer la visibilité du mot de passe
-    import {router} from "/src/js/app/router.js";
+    let selectedImageFile = null;
 
-    function submitForm(event) {
+    $('#profileImageInput').on('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            selectedImageFile = file;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $('#profileImagePreview').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    window.submitFinalForm = async function () {
+        const signupData = JSON.parse(localStorage.getItem("signupData") || "{}");
+
+        const userPayload = {
+            username: signupData.name || "Anonymous",
+            email: signupData.email,
+            password: signupData.password,
+        };
+
+        const patientPayload = {
+            nom: signupData.name || "Anonymous",
+            date_naissance: signupData.birthdate,
+            sexe: signupData.gender,
+            mobile: signupData.mobile,
+            country: signupData.country,
+            city: signupData.city,
+            neighborhood: signupData.neighborhood,
+            language: signupData.language,
+            poids: signupData.weight,
+            taille: signupData.size,
+            maladie_courante: signupData.commonDisease,
+            maladie_famille: signupData.familyDisease,
+            antecedent_cardiaque: signupData.cardiacAntecedents
+        };
+
+        const formData = new FormData();
+        formData.append("user", JSON.stringify(userPayload));
+        formData.append("patient", JSON.stringify(patientPayload));
+        if (selectedImageFile) {
+            formData.append("image", selectedImageFile);  // must match the field name expected by your serializer
+        }
+
+        try {
+            const response = await fetch("http://localhost:8000/api/register_patient/", {
+                method: "POST",
+                body: formData  // DO NOT set Content-Type when using FormData
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert("Registration successful!");
+                localStorage.removeItem("signupData");
+                window.location.href = "/Login";
+            } else {
+                console.error("Registration error:", data);
+                alert("Registration failed. Check your inputs.");
+            }
+        } catch (err) {
+            console.error("Network error:", err);
+            alert("Could not reach the server.");
+        }
+    };
+
+    window.goBack = function (event, url) {
         event.preventDefault();
-
-
-        history.pushState(null, '', '/Login');
-        router(); // passe à l’étape suivante
-    }
-    function goBack(event, url){
-        event.preventDefault();
-
         history.pushState(null, '', url);
         router();
-    }
-    window.submitForm = submitForm;
-    window.goBack = goBack;
+    };
 </script>

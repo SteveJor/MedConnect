@@ -1,10 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="container-fluid overflow-y-auto mb-4 " style="height: 100vh; padding-bottom: 150px">
+    !-- Header -->
+    <header class="d-flex fixed-top justify-content-between align-items-center p-3 text-white" style="background: linear-gradient(to bottom right, #d4f0ff, #f4fafe);">
+        <div class="align-content-start ">
+            <h5 class="mb-2 text-success">Welcome <span id="username"></span>!</h5>
+            <h2 class="mb-0 text-dark">Find Your Doctor</h2>
+        </div>
+        <img src="" alt="Profile" class="rounded-circle user userImg" style="width: 50px; height: 50px; object-fit: cover;">
+    </header>
+
+
+    <!-- Centre image uniquement s’il n'y a pas de notification -->
+    <div id="noNotificationImage" class="d-flex flex-column animate-slide-up justify-content-center align-items-center" style="height: 80vh; display: none;">
+        <img src="/images/notification.png" alt="No consultation" style="max-width: 550px; width: 83%;" />
+        <p class="text-center text-muted mt-3" style="font-size: 1rem;">
+            You have no notifications at the moment.
+        </p>
+    </div>
+
+
+
+    <nav class="navbar fixed-bottom bg-white border-top shadow-sm">
+        <div class="container-fluid d-flex justify-content-around" id="bottom-nav">
+            <a onclick="goTo(event, '/Home')" class="text-muted fs-4 text-decoration-none d-flex flex-column align-items-center">
+                <i class="fas fa-home"></i>
+                <small>Home</small>
+            </a>
+
+            <a onclick="goTo(event, '/consultation-requests')" class="text-muted fs-4 text-decoration-none d-flex flex-column align-items-center">
+                <i class="fas fa-stethoscope"></i>
+                <small>Consult</small>
+            </a>
+
+            <a onclick="goTo(event, '/notifications')" class="text-success fs-4 text-decoration-none d-flex flex-column align-items-center">
+                <i class="fas fa-bell"></i>
+                <small>Alerts</small>
+            </a>
+
+            <!-- Medical Staff Section (conditionally shown) -->
+            <a onclick="goTo(event, '/medical-dashboard')" id="medical-link" class="text-muted fs-4 text-decoration-none d-flex flex-column align-items-center d-none">
+                <i class="fas fa-user-md"></i>
+                <small>Staff</small>
+            </a>
+        </div>
+    </nav>
+    <div class="sidebar pt-4">
+        <div class="profile">
+            <img src="" alt="User" class="avatar userImg"/>
+            <div class="details">
+                <h2 id="details_name"></h2>
+            </div>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="menu">
+            <li><i class="fas fa-user-md"></i> My Doctors</li>
+            <li><i class="fas fa-clipboard"></i> Medical Records</li>
+            <li><i class="fas fa-credit-card"></i> Payments</li>
+            <li><i class="fas fa-pills"></i> Medicine Orders</li>
+            <li><i class="fas fa-calendar-check"></i> Test Bookings</li>
+            <li><i class="fas fa-lock"></i> Privacy & Policy</li>
+            <li><i class="fas fa-question-circle"></i> Help Center</li>
+            <li><i class="fas fa-cog"></i> Settings</li>
+        </ul>
+        <button class="logout" onclick='goTo(event, "/Login")'><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+    <script type="module">
+        import {router} from "/src/js/app/router.js";
+        const sidebar = document.querySelector(".sidebar");
+        const userBtn = document.querySelector(".user");
+        const closeBtn = document.querySelector(".close-btn");
+        const username = document.querySelector("#username");
+        const medical_link = document.querySelector("#medical-link");
+
+        userBtn.addEventListener("click", () => {
+            sidebar.classList.add("active");
+        });
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.remove("active");
+        });
+
+        const userData = JSON.parse(localStorage.getItem("userData")) || {};
+        username.innerHTML = userData.infoUser.username
+        document.getElementById("details_name").innerHTML = userData.infoUser.username
+        const userImgs = document.querySelectorAll(".userImg");
+        const imageUrl = "http://127.0.0.1:8000/" + userData.infoPatient.image;
+
+        userImgs.forEach(img => {
+            if (userData.infoPatient.image) {
+                img.src = imageUrl;
+            }
+        });
+        if(userData.isDoctor){
+            medical_link.classList.remove("d-none")
+        }
+        function goTo(event, url) {
+            event.preventDefault();
+
+            history.pushState(null, '', url);
+            location.reload();
+
+            router();
+        }
+
+        window.goTo = goTo;
+    </script>
+</div>

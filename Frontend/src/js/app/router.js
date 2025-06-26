@@ -14,7 +14,7 @@ export function loadPage(direction = 'forward', status = 1) {
         }
         const hash = window.location.hash.slice(1) || 'slide1';
         const page = validSlides.includes(hash) ? hash : 'slide1';
-        const path = `/src/templates/welcomeSlides/${page}.html`;
+        const path = `/src/templates/2_welcomeSlides/${page}.html`;
 
         const app = $('#app');
         const animationOut = direction === 'forward' ? 'slide-out-left' : 'slide-out-right';
@@ -34,6 +34,10 @@ export function loadPage(direction = 'forward', status = 1) {
                 })
         }, 1000);
 
+    } else if (status === 2) {
+        loadView("loginPages/login.html", () => {
+            history.pushState(null, '', `Login`);
+        });
     }
 
 }
@@ -49,33 +53,50 @@ export function router() {
         loadPage('forward', 1); // Accueil avec animation slide1
     }
     else if (path === "/Login") {
-        loadView("loginPages/login.html", async () => {
+        loadView("1_loginPages/login.html", async () => {
             const { initLoginView } = await import('/src/js/utils/login.js');
             initLoginView();
         });
     }
     else if (path === "/Signin") {
-        loadView("loginPages/register0.html", () => {
+        loadView("1_loginPages/register0.html", () => {
         });
     }
     else if (path === "/Register1") {
-        loadView("loginPages/register1.html", () => {
+        loadView("1_loginPages/register1.html", () => {
         });
     }
     else if (path === "/Register2") {
-        loadView("loginPages/register2.html", () => {
+        loadView("1_loginPages/register2.html", () => {
         });
     }
     else if (path === "/Register3") {
-        loadView("loginPages/register3.html", () => {
+        loadView("1_loginPages/register3.html", () => {
         });
     }
     else if (path === "/Register4") {
-        loadView("loginPages/register4.html", () => {
+        loadView("1_loginPages/register4.html", () => {
         });
     }
     else if (path === "/Home") {
         loadView("Main/home.html", () => {
+        });
+    }
+    else if (path === "/consultation-requests") {
+        loadView("Main/Sections/consultation_requests.html", () => {
+        });
+    }
+    else if (path === "/notifications") {
+        loadView("Main/Sections/notifications.html", () => {
+        });
+    }
+    else if (path === "/medical-dashboard") {
+        loadView("Main/Sections/medical_dashboard.html", () => {
+
+        });
+    }
+    else if (path === "/doctorDetail") {
+        loadView("Main/doctorDetail.html", () => {
         });
     }
     else if (path === "/AppelVideo") {

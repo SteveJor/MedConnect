@@ -2,10 +2,10 @@
 <!-- Header -->
 <header class="d-flex fixed-top justify-content-between align-items-center p-3 text-white" style="background: linear-gradient(to bottom right, #d4f0ff, #f4fafe);">
     <div class="align-content-start ">
-        <p class="mb-0">Welcome Georges!</p>
+        <h5 class="mb-2 text-success">Welcome <span id="username"></span>!</h5>
         <h2 class="mb-0 text-dark">Find Your Doctor</h2>
     </div>
-    <img src="/images/images medecins/docteur (6).jpg" alt="Profile" class="rounded-circle user" style="width: 50px; height: 50px; object-fit: cover;">
+    <img src="" alt="Profile" class="rounded-circle user userImg" style="width: 50px; height: 50px; object-fit: cover;">
 </header>
 
 <!-- Search -->
@@ -20,15 +20,15 @@
         <div class="d-flex gap-3 overflow-auto">
             <div class="position-relative">
                 <img src="/images/images medecins/docteur (10).jpg" class="rounded shadow" style="width: 100px; height: 120px; object-fit: cover;object-position: top">
-                <span class="badge bg-danger position-absolute top-0 start-0 m-1">Free</span>
+                <span class="badge bg-success position-absolute top-0 start-0 m-1">available</span>
             </div>
             <div class="position-relative">
                 <img src="/images/images medecins/newmedecin (9).jpg" class="rounded shadow" style="width: 100px; height: 120px; object-fit: cover;object-position: top">
-                <span class="badge bg-danger position-absolute top-0 start-0 m-1">Free</span>
+                <span class="badge bg-success position-absolute top-0 start-0 m-1">available</span>
             </div>
             <div class="position-relative">
                 <img src="/images/images medecins/docta (3).jpg" class="rounded shadow" style="width: 100px; height: 120px; object-fit: cover;object-position: top">
-                <span class="badge bg-danger position-absolute top-0 start-0 m-1">Free</span>
+                <span class="badge bg-success position-absolute top-0 start-0 m-1">available</span>
             </div>
         </div>
     </section>
@@ -94,45 +94,57 @@
     </section>
 
 
+    <nav class="navbar fixed-bottom bg-white border-top shadow-sm">
+        <div class="container-fluid d-flex justify-content-around" id="bottom-nav">
+            <a onclick="goTo(event, '/Home')" class="text-success fs-4 text-decoration-none d-flex flex-column align-items-center">
+                <i class="fas fa-home"></i>
+                <small>Home</small>
+            </a>
 
-<!-- Bottom Navigation -->
-<nav class="navbar fixed-bottom bg-white border-top shadow-sm">
-    <div class="container-fluid d-flex justify-content-around">
-        <a href="#" class="text-success fs-4"><i class="fas fa-home"></i></a>
-        <a href="#" class="text-muted fs-4"><i class="fas fa-heart"></i></a>
-        <a href="#" class="text-muted fs-4"><i class="fas fa-bell"></i></a>
-        <a href="#" class="text-muted fs-4"><i class="fas fa-cog"></i></a>
-    </div>
-</nav>
-</div>
-<div class="sidebar pt-4">
-    <div class="profile">
-        <img src="/images/images medecins/docteur (6).jpg" alt="User" class="avatar"/>
-        <div class="details">
-            <h4>Bilong Goerges</h4>
-            <p   style="font-size: 11px" class="mt-2"><i class="fas fa-phone"></i> 01303-527300</p>
+            <a onclick="goTo(event, '/consultation-requests')" class="text-muted fs-4 text-decoration-none d-flex flex-column align-items-center">
+                <i class="fas fa-stethoscope"></i>
+                <small>Consult</small>
+            </a>
+
+            <a onclick="goTo(event, '/notifications')" class="text-muted fs-4 text-decoration-none d-flex flex-column align-items-center">
+                <i class="fas fa-bell"></i>
+                <small>Alerts</small>
+            </a>
+
+            <!-- Medical Staff Section (conditionally shown) -->
+            <a onclick="goTo(event, '/medical-dashboard')" id="medical-link" class="text-muted fs-4 text-decoration-none d-flex flex-column align-items-center d-none">
+                <i class="fas fa-user-md"></i>
+                <small>Staff</small>
+            </a>
         </div>
-        <button class="close-btn"><i class="fas fa-times"></i></button>
+    </nav>
+    <div class="sidebar pt-4">
+        <div class="profile">
+            <img src="" alt="User" class="avatar userImg"/>
+            <div class="details">
+                <h2 id="details_name"></h2>
+            </div>
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="menu">
+            <li><i class="fas fa-user-md"></i> My Doctors</li>
+            <li><i class="fas fa-clipboard"></i> Medical Records</li>
+            <li><i class="fas fa-credit-card"></i> Payments</li>
+            <li><i class="fas fa-pills"></i> Medicine Orders</li>
+            <li><i class="fas fa-calendar-check"></i> Test Bookings</li>
+            <li><i class="fas fa-lock"></i> Privacy & Policy</li>
+            <li><i class="fas fa-question-circle"></i> Help Center</li>
+            <li><i class="fas fa-cog"></i> Settings</li>
+        </ul>
+        <button class="logout" onclick='goTo(event, "/Login")'><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
-    <ul class="menu">
-        <li><i class="fas fa-user-md"></i> My Doctors</li>
-        <li><i class="fas fa-clipboard"></i> Medical Records</li>
-        <li><i class="fas fa-credit-card"></i> Payments</li>
-        <li><i class="fas fa-pills"></i> Medicine Orders</li>
-        <li><i class="fas fa-calendar-check"></i> Test Bookings</li>
-        <li><i class="fas fa-lock"></i> Privacy & Policy</li>
-        <li><i class="fas fa-question-circle"></i> Help Center</li>
-        <li><i class="fas fa-cog"></i> Settings</li>
-    </ul>
-    <button class="logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
-</div>
-
-
-
 <script type="module">
+    import {router} from "/src/js/app/router.js";
         const sidebar = document.querySelector(".sidebar");
         const userBtn = document.querySelector(".user");
         const closeBtn = document.querySelector(".close-btn");
+    const username = document.querySelector("#username");
+    const medical_link = document.querySelector("#medical-link");
 
         userBtn.addEventListener("click", () => {
             sidebar.classList.add("active");
@@ -141,5 +153,31 @@
         closeBtn.addEventListener("click", () => {
             sidebar.classList.remove("active");
         });
-</script>
 
+        const userData = JSON.parse(localStorage.getItem("userData")) || {};
+        username.innerHTML = userData.infoUser.username
+        document.getElementById("details_name").innerHTML = userData.infoUser.username
+        const userImgs = document.querySelectorAll(".userImg");
+        const imageUrl = "http://127.0.0.1:8000/" + userData.infoPatient.image;
+
+        userImgs.forEach(img => {
+            if (userData.infoPatient.image) {
+                img.src = imageUrl;
+            }
+        });
+        if(userData.isDoctor){
+            medical_link.classList.remove("d-none")
+        }
+
+        function goTo(event, url) {
+            event.preventDefault();
+
+            history.pushState(null, '', url);
+            location.reload();
+
+            router();
+        }
+
+        window.goTo = goTo;
+</script>
+</div>
